@@ -1,0 +1,81 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MyMeetings.Class
+{
+    internal class MeetingHandler : IMeetingHandler
+    {
+        
+        public MeetingHandler() { }
+        /// <summary>
+        /// Метод добовляет в список совещание
+        /// </summary>
+        /// <param name="meetings">Список совещаний</param>
+        public void CreateMeeting(List<Meeting> meetings)
+        {
+            DateTime dateStart = DateChek("Введите дату и время начала совещаяния");
+            DateTime dateEnd = DateChek("Введите дату и время окончания совещания");
+            Console.WriteLine("Ведите тему совещания");
+            string text = Console.ReadLine();
+            DateTime remainder = DateChek("Введите дату и время когда напомнить о встрече");
+
+            Meeting meeting = new Meeting(dateStart, dateEnd, text, remainder);
+
+            meetings.Add(meeting);
+        }
+
+        public void DeletMeeting(List<Meeting> meetings, int index)
+        {
+            meetings.RemoveAt(index-1);
+        }
+
+        public void EditMeeting(List<Meeting> meetings, int index)
+        {
+            if(meetings.Count > 0 && index <= meetings.Count)
+            { 
+            DateTime dateStart = DateChek("Введите дату и время начала совещаяния");
+            DateTime dateEnd = DateChek("Введите дату и время окончания совещания");
+            Console.WriteLine("Ведите тему совещания");
+            string text = Console.ReadLine();
+            DateTime remainder = DateChek("Введите дату и время когда напомнить о встрече");
+
+            meetings[index-1]=new Meeting(dateStart, dateEnd, text, remainder);
+            }
+            else
+            {
+                Console.WriteLine("Такой строки нет в списке встреч");
+            }
+        }
+
+        DateTime DateChek (string text)
+        {
+            DateTime date = DateTime.Now;
+            string dateString = string.Empty;
+            bool flag = false;
+            while (!flag)
+            {
+                Console.WriteLine($"{text} в формате: дата месяца.месяц.год/пробел/час:минуты");
+                dateString = Console.ReadLine();
+                flag = DateTime.TryParse(dateString, out date);
+            }
+
+            return date;
+        }
+        int IntCheck(string text)
+        {
+            int result = 0;
+            bool isTrueInt = false;
+            string intString;
+            while (!isTrueInt)
+            {
+                Console.WriteLine(text);
+                intString = Console.ReadLine();
+                isTrueInt = int.TryParse(intString, out result);
+            }
+            return result;
+        }
+    }
+}
