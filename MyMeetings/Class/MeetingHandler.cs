@@ -68,12 +68,20 @@ namespace MyMeetings.Class
             }
             
         }
-
+        /// <summary>
+        /// Метод удоляет из списка совещание по заданному индексу
+        /// </summary>
+        /// <param name="meetings">Спсок совещаний</param>
+        /// <param name="index">Индекс совещания</param>
         public void DeletMeeting(List<Meeting> meetings, int index)
         {
             meetings.RemoveAt(index-1);
         }
-
+        /// <summary>
+        /// Редоктирование совещания по заданному индексу
+        /// </summary>
+        /// <param name="meetings">Список совещания</param>
+        /// <param name="index">Индекс совещания</param>
         public void EditMeeting(List<Meeting> meetings, int index)
         {
             if(meetings.Count > 0 && index <= meetings.Count)
@@ -91,7 +99,11 @@ namespace MyMeetings.Class
                 Console.WriteLine("Такой строки нет в списке встреч");
             }
         }
-
+        /// <summary>
+        /// Получает и проверяет введённую дату от пользователя
+        /// </summary>
+        /// <param name="text">текст пользователя</param>
+        /// <returns>Возвращает дату</returns>
         DateTime DateChek (string text)
         {
             DateTime date = DateTime.Now;
@@ -106,6 +118,11 @@ namespace MyMeetings.Class
 
             return date;
         }
+        /// <summary>
+        /// Проучает и проверяет введённое число от пользователя
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>Возвращает int</returns>
         int IntCheck(string text)
         {
             int result = 0;
