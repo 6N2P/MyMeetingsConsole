@@ -53,12 +53,7 @@ namespace MyMeetings
                         meetingHandler.EditMeeting(meetings, index);
                         break;
                     case 5:
-                        saveMeeting=new string[meetings.Count];
-                        for (int i = 0; i < meetings.Count; i++)
-                        {
-                            saveMeeting[i] = meetings[i].ToString();
-                        }
-                        File.WriteAllLines(pathFail, saveMeeting);
+                        SaveMeetingToFail();
                         break;
                     case 6: endProgram = true; break;
                 }
@@ -115,7 +110,7 @@ namespace MyMeetings
                 }
                 return result;
             }
-
+            ///Задает таймер. сравнивает время каждые 30 секунд
             void SetTimer()
             {
               Timer  aTimer = new Timer(30000);
@@ -124,7 +119,8 @@ namespace MyMeetings
                 aTimer.AutoReset = true;
                 aTimer.Enabled = true;
             }
-
+            ///Обработчик события сравнивает текующую дату и время с нгазначенным аолем Reminder
+            ///И если они совподают воспроизводит звуковой сигнал
             void OnTimedEvent(Object sourse, ElapsedEventArgs e)
             {
                 DateTime dateTimeNow = DateTime.Now;
@@ -136,9 +132,19 @@ namespace MyMeetings
                         meetings[i].Reminder.Minute == dateTimeNow.Minute)
                     {
                         Console.Beep(700, 10000);
-                        Console.WriteLine($"Предстоит встреча {meetings[i].Text}");
+                        Console.WriteLine($"Предстоит встреча {meetings[i].Text} в {meetings[i].TimeStart}");
                     }
                 }
+            }
+            ///Метод сохроняет встречи в файл
+            void SaveMeetingToFail()
+            {
+                saveMeeting = new string[meetings.Count];
+                for (int i = 0; i < meetings.Count; i++)
+                {
+                    saveMeeting[i] = meetings[i].ToString();
+                }
+                File.WriteAllLines(pathFail, saveMeeting);
             }
         }
     }
