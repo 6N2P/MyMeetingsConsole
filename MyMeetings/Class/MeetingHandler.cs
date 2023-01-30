@@ -28,9 +28,45 @@ namespace MyMeetings.Class
             string text = Console.ReadLine();
             DateTime remainder = DateChek("Введите дату и время когда напомнить о встрече");
 
-            Meeting meeting = new Meeting(dateStart, dateEnd, text, remainder);
+            bool flag = false;
 
-            meetings.Add(meeting);
+            //Прверка чтоб дата ыстречи была не позднее нынешней даты
+            if (dateStart >= DateTime.Now)
+            {
+                if (meetings.Count > 0)
+                {
+                    // Проверка на совподение дат встреч
+                    for (int i = 0; i < meetings.Count; i++)
+                    {
+                        if (meetings[i].TimeStart != dateStart)
+                        {
+                            flag = true;
+                        }
+                        else
+                        {
+                            flag = false;
+                            Console.WriteLine($"В это аремя уже есть событие: {meetings[i].Text} ");
+                        }
+                    }
+
+                    if (flag)
+                    {
+                        ///Добавление в список встречи.
+                        Meeting meeting = new Meeting(dateStart, dateEnd, text, remainder);
+                        meetings.Add(meeting);
+                    }
+                }
+                else
+                {
+                    Meeting meeting = new Meeting(dateStart, dateEnd, text, remainder);
+                    meetings.Add(meeting);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Дата запланированной встречи не должна быть раньше текущей даты");
+            }
+            
         }
 
         public void DeletMeeting(List<Meeting> meetings, int index)
