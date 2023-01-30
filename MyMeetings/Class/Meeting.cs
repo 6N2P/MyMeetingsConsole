@@ -8,10 +8,10 @@ namespace MyMeetings.Class
 {
     internal class Meeting
     {
-        DateTime TimeStart { get; set; }
-        DateTime TimeEnd { get; set; }
-        string Text { get; set; }
-        DateTime Reminder { get; set; }
+       public DateTime TimeStart { get; set; }
+       public DateTime TimeEnd { get; set; }
+       public string Text { get; set; }
+       public DateTime Reminder { get; set; }
 
         public Meeting() { }
         public Meeting(DateTime timeStart, DateTime timeEnd, string text, DateTime reminder)

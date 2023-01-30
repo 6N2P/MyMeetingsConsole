@@ -6,13 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.IO;
+using System.Timers;
 
 using MyMeetings.Class;
+using System.Timers;
+
 namespace MyMeetings
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static  void Main(string[] args)
         {
             List<Meeting> meetings = new List<Meeting>();
             MeetingHandler meetingHandler = new MeetingHandler();
@@ -59,7 +62,10 @@ namespace MyMeetings
                         break;
                     case 6: endProgram = true; break;
                 }
+                SetTimer();
             }
+
+            
 
             ///Метод получает какое действие хочет сделать пользователь
             int  SelectionCheck()
@@ -108,6 +114,31 @@ namespace MyMeetings
                     isTrueInt = int.TryParse(intString, out result);
                 }
                 return result;
+            }
+
+            void SetTimer()
+            {
+              Timer  aTimer = new Timer(30000);
+
+                aTimer.Elapsed += OnTimedEvent;
+                aTimer.AutoReset = true;
+                aTimer.Enabled = true;
+            }
+
+            void OnTimedEvent(Object sourse, ElapsedEventArgs e)
+            {
+                DateTime dateTimeNow = DateTime.Now;
+
+                for (int i = 0; i < meetings.Count; i++)
+                {
+                    if (meetings[i].Reminder.Date == dateTimeNow.Date && 
+                        meetings[i].Reminder.Hour == dateTimeNow.Hour && 
+                        meetings[i].Reminder.Minute == dateTimeNow.Minute)
+                    {
+                        Console.Beep(700, 10000);
+                        Console.WriteLine($"Предстоит встреча {meetings[i].Text}");
+                    }
+                }
             }
         }
     }

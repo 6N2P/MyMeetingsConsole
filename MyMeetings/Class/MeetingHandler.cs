@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace MyMeetings.Class
 {
     internal class MeetingHandler : IMeetingHandler
     {
         
+        public List<Meeting>Meetings { get; set; }
         public MeetingHandler() { }
+        public MeetingHandler (List<Meeting> meetings)
+        {
+            Meetings = meetings;
+        }
         /// <summary>
         /// Метод добовляет в список совещание
         /// </summary>
@@ -77,5 +83,7 @@ namespace MyMeetings.Class
             }
             return result;
         }
+       
+      
     }
 }
